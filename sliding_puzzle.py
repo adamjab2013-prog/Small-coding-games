@@ -13,6 +13,7 @@ Controls:
 from __future__ import annotations
 
 import random
+import time
 from typing import List, Tuple
 
 Board = List[List[int]]
@@ -116,6 +117,7 @@ def main() -> None:
     """Run the sliding puzzle game loop."""
     board = make_random_solvable_board()
     moves = 0
+    start_time = time.monotonic()
 
     print("Welcome to the 3x3 Sliding Tile Puzzle!")
     print("Use W/A/S/D to move the blank tile. Press Q to quit.")
@@ -124,7 +126,9 @@ def main() -> None:
         draw_board(board)
 
         if is_win(board):
+            elapsed_seconds = time.monotonic() - start_time
             print(f"Congratulations! You solved the puzzle in {moves} moves.")
+            print(f"Elapsed time: {elapsed_seconds:.2f} seconds.")
             break
 
         command = input("Move (W/A/S/D, Q to quit): ").strip().lower()
@@ -140,6 +144,7 @@ def main() -> None:
         moved = try_move(board, key)
         if moved:
             moves += 1
+            print(f"Move count: {moves}")
         else:
             print("Invalid move. Try W/A/S/D.")
 
